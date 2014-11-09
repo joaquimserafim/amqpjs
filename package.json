@@ -1,0 +1,41 @@
+{
+  "name": "amqpjs",
+  "version": "1.0.0",
+  "description": "wraps the connection object from amqp.node/callback_api module to a simple way to be used",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/istanbul/lib/cli.js cover ./node_modules/tape/bin/tape test/*.js && ./node_modules/istanbul/lib/cli.js check-coverage --statements 100 --functions 100 --lines 100 --branches 100",
+    "jshint": "./node_modules/jshint/bin/jshint -c .jshintrc index.js test/*.js",
+    "codestyle": "./node_modules/jscs/bin/jscs -p google index.js test/*.js",
+    "coverage": "open coverage/lcov-report/index.html"
+  },
+  "author": "@joaquimserafim",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joaquimserafim/amqpjs"
+  },
+  "keywords": [
+    "amqp",
+    "rabbitmq"
+  ],
+  "dependencies": {
+    "amqplib": "^0.3.0",
+    "core-util-is": "^1.0.1",
+    "sliced": "0.0.5",
+    "thunky": "^0.1.0",
+    "url": "^0.10.1"
+  },
+  "devDependencies": {
+    "istanbul": "^0.3.2",
+    "jscs": "^1.7.3",
+    "jshint": "^2.5.7",
+    "pre-commit": "0.0.9",
+    "tape": "^3.0.1"
+  },
+  "pre-commit": [
+    "jshint",
+    "codestyle",
+    "test"
+  ]
+}
