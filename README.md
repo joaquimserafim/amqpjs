@@ -1,20 +1,23 @@
 ## amqpjs
 
-**wraps the connection object from the `amqplib` module to a simple way to be used**
+wraps the connection object from the `amqplib` module to a simple way to be used
 
 <a href="https://nodei.co/npm/amqpjs/"><img src="https://nodei.co/npm/amqpjs.png?downloads=true"></a>
 
+**vagrant machine to run the code coverage & the tests**	
+`npm run vm`
 
-* **code coverage:** 	
+**code coverage:**
 `npm test && npm run coverage`
 
-* **codestyle:** 	
+**codestyle:** 	
 `npm run codestyle`
 
-* **jshint:** 	
+**jshint:** 	
 `npm run jshint`
 
-*attention:* `amqp://guest:guest@localhost:5672/test` this should be the amqp URI to run the tests
+
+*see the tests for the configurations used*
 
 ####App
 

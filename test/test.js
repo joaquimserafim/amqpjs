@@ -102,10 +102,8 @@ tape('bad connection string should emit an amqpjs.error', function(assert) {
 tape('close a connection before to call `createChannel`',
 function(assert) {
   client = amqpjs();
-  client.close(function() {
-    assert.pass('inside of the `close` cb');
-    assert.end();
-  });
+  client.close();
+  assert.end();
   client.createChannel(function(err) {
     assert.equal(err.message, 'Channel ended, no reply will be forthcoming');
   });
