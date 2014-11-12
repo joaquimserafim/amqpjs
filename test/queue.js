@@ -31,6 +31,10 @@ tape('testing with a producer & consumer', function(assert) {
     assert.pass('Error: ' + err.message);
   }
 
+  function onClose() {
+    assert.pass('closing connection');
+  }
+
   function infoChannelClosed() {
     assert.pass('channel is closed');
   }
@@ -44,7 +48,10 @@ tape('testing with a producer & consumer', function(assert) {
   };
 
   producer.on('error', onError);
+  producer.on('close', onClose);
+
   consumer.on('error', onError);
+  consumer.on('close', onClose);
 
   //
   //  PRODUCER
@@ -65,9 +72,7 @@ tape('testing with a producer & consumer', function(assert) {
       channel.close(function(err) {
         assert.deepEqual(err, null);
         assert.pass('closing `producer` channel');
-        producer.close(function() {
-          assert.pass('closing `producer` connection');
-        });
+        producer.close();
       });
     }
 
@@ -152,10 +157,8 @@ tape('testing with a producer & consumer', function(assert) {
           channel.close(function(err) {
             assert.deepEqual(err, null);
             assert.pass('closing `consumer` channel');
-            consumer.close(function() {
-              assert.pass('closing `consumer` connection');
-              assert.end();
-            });
+            consumer.close();
+            assert.end();
           });
         } else {
           tearDown();

@@ -68,9 +68,6 @@ AMQPJS.init = function init(uri, socketOptions) {
     });
   });
 
-  self._dom.on('dispose', function() {
-  });
-
   self._get = thunky(function(cb) {
     function connectCb(conn) {
       self._dom.add(conn);
@@ -97,14 +94,13 @@ AMQPJS.prototype.createChannel = function createChannel() {
   return this;
 };
 
-AMQPJS.prototype.close = function close(cb) {
-  cb = cb || function() {};
+AMQPJS.prototype.close = function close() {
   var self = this;
   self._get(function(err, conn) {
     conn.close(function() {
       self._dom.exit();
       self._dom.dispose();
-      cb();
+      self.emit('close');
     });
   });
   return self;

@@ -39,8 +39,11 @@ see [here](http://www.squaremobius.net/amqp.node/doc/channel_api.html) for more 
 	
 **close the connection** 
 	
-	close([function() {...}])
+	close()
+	
+**event to handle the close connection**
 
+	on('close', function() {...});
 
 ####Example
 
@@ -54,6 +57,8 @@ see [here](http://www.squaremobius.net/amqp.node/doc/channel_api.html) for more 
 	//
 	client.on('error', function(err) {...});
 	
+	client.on('close', function() {...});
+	
 	//
 	// can create several channels
 	//
@@ -64,7 +69,9 @@ see [here](http://www.squaremobius.net/amqp.node/doc/channel_api.html) for more 
 		// do something with channel
 		channel...
 		// close this channel
-		channel.close();
+		channel.close(function(err) {
+			client.close();
+		});
 	});
 	
 

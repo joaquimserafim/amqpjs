@@ -14,7 +14,8 @@ tape('a normal connection', function(assert) {
     assert.deepEqual(err, null);
     assert.deepEqual(typeof channel, 'object');
     assert.deepEqual(channel.ch, 1);
-    client.close(assert.end);
+    client.close();
+    assert.end();
   });
 });
 
@@ -36,7 +37,8 @@ tape('a ssl connection', function(assert) {
     assert.deepEqual(err, null);
     assert.deepEqual(typeof channel, 'object');
     assert.deepEqual(channel.ch, 1);
-    client.close(assert.end);
+    client.close();
+    assert.end();
   });
 });
 
@@ -76,7 +78,8 @@ tape('pass some configurations to the connection', function(assert) {
     assert.deepEqual(channel.ch, 1);
     channel.close(function() {
       assert.pass('channel closed');
-      client.close(assert.end);
+      client.close();
+      assert.end();
     });
   });
 });
@@ -102,8 +105,8 @@ tape('bad connection string should emit an amqpjs.error', function(assert) {
 tape('close a connection before to call `createChannel`',
 function(assert) {
   client = amqpjs();
+  client.on('close', assert.end);
   client.close();
-  assert.end();
   client.createChannel(function(err) {
     assert.equal(err.message, 'Channel ended, no reply will be forthcoming');
   });
