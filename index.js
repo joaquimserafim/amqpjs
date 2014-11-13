@@ -97,11 +97,11 @@ AMQPJS.prototype.createChannel = function createChannel() {
 AMQPJS.prototype.close = function close() {
   var self = this;
   self._get(function(err, conn) {
-    conn.close(function() {
+    conn.close(process.nextTick(function() {
       self._dom.exit();
       self._dom.dispose();
       self.emit('close');
-    });
+    }));
   });
   return self;
 };
