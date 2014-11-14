@@ -52,6 +52,8 @@ function AMQPJS(uri, socketOptions) {
   AMQPJS.init.call(this, uri, socketOptions);
 }
 
+util.inherits(AMQPJS, EventEmitter);
+
 AMQPJS.init = function init(uri, socketOptions) {
   // using domains to control
   // connection exceptions
@@ -84,7 +86,6 @@ AMQPJS.init = function init(uri, socketOptions) {
   });
 };
 
-util.inherits(AMQPJS, EventEmitter);
 
 AMQPJS.prototype.createChannel = function createChannel() {
   var args = sliced(arguments);
