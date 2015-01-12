@@ -1,6 +1,6 @@
 'use strict';
 
-var tape    = require('tape');
+var test    = require('tape');
 var amqpjs  = require('../index');
 var fs      = require('fs');
 
@@ -8,7 +8,7 @@ var client;
 var vhost = '';
 var sslFiles = '/vagrant/fixtures/';
 
-tape('a normal connection', function(assert) {
+test('a normal connection', function(assert) {
   client = new amqpjs({vhost: vhost, channelMax: 1});
   assert.ok(client);
   client.createChannel(function(err, channel) {
@@ -20,7 +20,7 @@ tape('a normal connection', function(assert) {
   });
 });
 
-tape('a ssl connection', function(assert) {
+test('a ssl connection', function(assert) {
   var opts = {
     cert      : fs.readFileSync(sslFiles + 'cert.pem'),
     key       : fs.readFileSync(sslFiles + 'key.pem'),
@@ -43,7 +43,7 @@ tape('a ssl connection', function(assert) {
   });
 });
 
-tape('a bad host soon a bad ssl connection', function(assert) {
+test('a bad host soon a bad ssl connection', function(assert) {
   var opts = {
     cert      : fs.readFileSync(sslFiles + 'cert.pem'),
     key       : fs.readFileSync(sslFiles + 'key.pem'),
@@ -64,7 +64,7 @@ tape('a bad host soon a bad ssl connection', function(assert) {
   client.createChannel();
 });
 
-tape('pass some configurations to the connection', function(assert) {
+test('pass some configurations to the connection', function(assert) {
   client = new amqpjs({
     vhost   : vhost,
     port    : 5672,
@@ -85,7 +85,7 @@ tape('pass some configurations to the connection', function(assert) {
   });
 });
 
-tape('pass some a bad configuration to the connection', function(assert) {
+test('pass some a bad configuration to the connection', function(assert) {
   client = amqpjs('wow');
   client.on('error', function(err) {
     assert.equal(err.message, 'Invalid AMQP URI!');
@@ -94,7 +94,7 @@ tape('pass some a bad configuration to the connection', function(assert) {
   client.createChannel();
 });
 
-tape('bad connection string should emit an amqpjs.error', function(assert) {
+test('bad connection string should emit an amqpjs.error', function(assert) {
   client = amqpjs({port: 3333});
   client.on('error', function(err) {
     assert.equal(err.message, 'connect ECONNREFUSED');
@@ -103,7 +103,7 @@ tape('bad connection string should emit an amqpjs.error', function(assert) {
   client.createChannel();
 });
 
-tape('close a connection before to call `createChannel`',
+test('close a connection before to call `createChannel`',
 function(assert) {
   client = amqpjs();
   client.on('close', assert.end);
@@ -117,7 +117,7 @@ function(assert) {
 // this last test you must restart your rabbitmq server
 // trying to find a better approach for this test
 //
-tape('connection closed unexpectedly then should emit an amqpjs.error',
+test('connection closed unexpectedly then should emit an amqpjs.error',
 function(assert) {
   client = amqpjs('amqp://guest:guest@localhost:5672');
   client.on('error', function(err) {

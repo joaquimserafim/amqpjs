@@ -27,6 +27,8 @@ function checkUri(conf) {
   }
 }
 
+module.exports.amqpUri = amqpUri;
+
 //
 // AMQPJS
 //

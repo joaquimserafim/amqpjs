@@ -4,7 +4,7 @@ wraps the connection object from the `amqplib` module to a simple way to be used
 
 <a href="https://nodei.co/npm/amqpjs/"><img src="https://nodei.co/npm/amqpjs.png?downloads=true"></a>
 
-**V1.2**
+**V1.3**
 
 **test & code coverage:** 	
 `npm test && npm run open-coverage`

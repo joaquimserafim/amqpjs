@@ -3,7 +3,7 @@
 var tape    = require('tape');
 var amqpjs  = require('../index');
 
-tape('testing with a producer & consumer', function(assert) {
+test('testing with a producer & consumer', function(assert) {
   var uri = 'amqp://guest:guest@localhost:5672';
 
   var producer = amqpjs(uri);
