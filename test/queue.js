@@ -1,6 +1,6 @@
 'use strict';
 
-var tape    = require('tape');
+var test    = require('tape');
 var amqpjs  = require('../index');
 
 test('testing with a producer & consumer', function(assert) {

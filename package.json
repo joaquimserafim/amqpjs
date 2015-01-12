@@ -1,6 +1,6 @@
 {
   "name": "amqpjs",
-  "version": "1.3.3",
+  "version": "1.3.4",
   "description": "wraps the connection object from amqp.node/callback_api module to a simple way to be used",
   "main": "index.js",
   "scripts": {
@@ -8,8 +8,7 @@
     "jshint": "./node_modules/jshint/bin/jshint -c .jshintrc index.js test/*.js",
     "codestyle": "./node_modules/jscs/bin/jscs -p google index.js test/*.js",
     "check-coverage": "./node_modules/istanbul/lib/cli.js check-coverage --statements 100 --functions 100 --lines 100 --branches 100",
-    "open-coverage": "open coverage/lcov-report/index.html",
-    "build": ""
+    "open-coverage": "open coverage/lcov-report/index.html"
   },
   "author": "@joaquimserafim",
   "license": "ISC",

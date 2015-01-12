@@ -27,13 +27,12 @@ function checkUri(conf) {
   }
 }
 
-module.exports.formatUri = amqpUri;
-
 //
 // AMQPJS
 //
 
 module.exports = AMQPJS;
+module.exports.formatUri = amqpUri;
 
 function AMQPJS(uri, socketOptions) {
   if (!(this instanceof AMQPJS)) {

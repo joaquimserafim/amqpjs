@@ -8,6 +8,19 @@ var client;
 var vhost = '';
 var sslFiles = '/vagrant/fixtures/';
 
+test('test `formatUri`', function(assert) {
+  var obj = {
+    ssl: false,
+    host: 'localhost',
+    port: 5566,
+    vhost: 'some_vhost'
+  };
+
+  var uri = amqpjs.formatUri(obj);
+  assert.equal('amqp://localhost:5566/some_vhost', uri, uri);
+  assert.end();
+});
+
 test('a normal connection', function(assert) {
   client = new amqpjs({vhost: vhost, channelMax: 1});
   assert.ok(client);
