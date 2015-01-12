@@ -8,10 +8,11 @@ var domain        = require('domain');
 var EventEmitter  = require('events').EventEmitter;
 var url           = require('url');
 var types         = require('core-util-is');
+var amqpUri       = require('amqp-uri');
 
-function amqpURI(conf) {
+function checkUri(conf) {
   if (types.isString(conf)) {
-    // valid AMQP URL
+    // valid if is an AMQP URI
     var valURI = url.parse(conf);
 
     if (!valURI.protocol ||
@@ -22,19 +23,7 @@ function amqpURI(conf) {
       return conf;
     }
   } else {
-    conf = conf || {};
-    var auth = '';
-
-    if (conf.user && conf.password) {
-      auth = util.format('%s:%s@', conf.user, conf.password);
-    }
-
-    return util.format('%s://%s%s:%d%s',
-      conf.ssl ? 'amqps' : 'amqp',
-      auth,
-      conf.host || 'localhost',
-      conf.port || (conf.ssl ? 5671 : 5672),
-      conf.vhost || '');
+    return amqpUri(conf || {});
   }
 }
 
@@ -55,14 +44,13 @@ function AMQPJS(uri, socketOptions) {
 util.inherits(AMQPJS, EventEmitter);
 
 AMQPJS.init = function init(uri, socketOptions) {
+  var self = this;
   // using domains to control
   // connection exceptions
-  this._dom = domain.create();
-
-  var self = this;
+  self._dom = domain.create();
 
   //
-  // single error handler in a single place
+  // error handler
   //
   self._dom.on('error', function(err) {
     process.nextTick(function() {
@@ -73,10 +61,10 @@ AMQPJS.init = function init(uri, socketOptions) {
   self._get = thunky(function(cb) {
     function connectCb(conn) {
       self._dom.add(conn);
-      return cb(null, conn);
+      cb(null, conn);
     }
 
-    uri = amqpURI(uri);
+    uri = checkUri(uri);
 
     if (types.isError(uri)) {
       self.emit('error', uri);
@@ -86,23 +74,26 @@ AMQPJS.init = function init(uri, socketOptions) {
   });
 };
 
-
 AMQPJS.prototype.createChannel = function createChannel() {
   var args = sliced(arguments);
+
   this._get(function(err, conn) {
     conn.createChannel.apply(conn, args);
   });
+
   return this;
 };
 
 AMQPJS.prototype.close = function close() {
   var self = this;
+
   self._get(function(err, conn) {
-    conn.close(process.nextTick(function() {
+    conn.close(function() {
       self._dom.exit();
       self._dom.dispose();
       self.emit('close');
-    }));
+    });
   });
+
   return self;
 };

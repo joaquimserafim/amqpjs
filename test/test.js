@@ -6,9 +6,10 @@ var fs      = require('fs');
 
 var client;
 var vhost = '';
+var sslFiles = '/vagrant/fixtures/';
 
 tape('a normal connection', function(assert) {
-  client = new amqpjs({vhost: vhost});
+  client = new amqpjs({vhost: vhost, channelMax: 1});
   assert.ok(client);
   client.createChannel(function(err, channel) {
     assert.deepEqual(err, null);
@@ -21,11 +22,11 @@ tape('a normal connection', function(assert) {
 
 tape('a ssl connection', function(assert) {
   var opts = {
-    cert      : fs.readFileSync(__dirname + '/fixtures/cert.pem'),
-    key       : fs.readFileSync(__dirname + '/fixtures/key.pem'),
+    cert      : fs.readFileSync(sslFiles + 'cert.pem'),
+    key       : fs.readFileSync(sslFiles + 'key.pem'),
     passphrase: 'MySecretPassword',
     ca        : [
-      fs.readFileSync(__dirname + '/fixtures/cacert.pem')
+      fs.readFileSync(sslFiles + 'cacert.pem')
     ]
   };
   client = new amqpjs({
@@ -44,11 +45,11 @@ tape('a ssl connection', function(assert) {
 
 tape('a bad host soon a bad ssl connection', function(assert) {
   var opts = {
-    cert      : fs.readFileSync(__dirname + '/fixtures/cert.pem'),
-    key       : fs.readFileSync(__dirname + '/fixtures/key.pem'),
+    cert      : fs.readFileSync(sslFiles + 'cert.pem'),
+    key       : fs.readFileSync(sslFiles + 'key.pem'),
     passphrase: 'MySecretPassword',
     ca        : [
-      fs.readFileSync(__dirname + '/fixtures/cacert.pem')
+      fs.readFileSync(sslFiles + 'cacert.pem')
     ]
   };
   client = new amqpjs({
@@ -118,9 +119,9 @@ function(assert) {
 //
 tape('connection closed unexpectedly then should emit an amqpjs.error',
 function(assert) {
-  client = amqpjs('amqp://guest:guest@localhost:5672/test');
+  client = amqpjs('amqp://guest:guest@localhost:5672');
   client.on('error', function(err) {
-    assert.pass(err.message);
+    assert.ok(err.message);
     assert.end();
   });
   client.createChannel(function(err, channel) {

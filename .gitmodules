@@ -1,3 +1,0 @@
-[submodule "vm"]
-	path = vm
-	url = git@github.com:joaquimserafim/vagrant-nodejs-rabbitmq.git
