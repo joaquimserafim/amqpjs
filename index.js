@@ -27,7 +27,7 @@ function checkUri(conf) {
   }
 }
 
-module.exports.amqpUri = amqpUri;
+module.exports.formatUri = amqpUri;
 
 //
 // AMQPJS
