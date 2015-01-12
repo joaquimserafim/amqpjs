@@ -6,7 +6,7 @@ wraps the connection object from the `amqplib` module to a simple way to be used
 
 **V1.2**
 
-**test & code coverage:**
+**test & code coverage:** 	
 `npm test && npm run open-coverage`
 
 **codestyle:** 	
