@@ -37,7 +37,7 @@ see [here](http://www.squaremobius.net/amqp.node/doc/channel_api.html) for more 
 **create a channel** 
 *This channel is a "virtual" connection inside the "real" TCP connection, and it is over the channel that you issue AMQP commands.**
 
-	createChannel([channelOptions], function(err, channel) {...})
+	createChannel(function(err, channel) {...})
 	
 **close the connection** 
 	
@@ -64,9 +64,9 @@ see [here](http://www.squaremobius.net/amqp.node/doc/channel_api.html) for more 
 	//
 	// can create several channels
 	//
-	client.createChannel([channelOptions], function(err, channel) {...});
+	client.createChannel(function(err, channel) {...});
 	
-	client.createChannel([channelOptions], function(err, channel) {
+	client.createChannel(function(err, channel) {
 		// err
 		// do something with channel
 		channel...

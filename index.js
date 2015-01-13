@@ -54,9 +54,7 @@ AMQPJS.init = function init(uri, socketOptions) {
   // error handler
   //
   self._dom.on('error', function(err) {
-    process.nextTick(function() {
-      self.emit('error', err);
-    });
+    self.emit('error', err);
   });
 
   self._get = thunky(function(cb) {
@@ -73,6 +71,8 @@ AMQPJS.init = function init(uri, socketOptions) {
       amqplib.connect(uri, socketOptions, self._dom.intercept(connectCb));
     }
   });
+
+  return self;
 };
 
 AMQPJS.prototype.createChannel = function createChannel() {

@@ -119,6 +119,9 @@ test('bad connection string should emit an amqpjs.error', function(assert) {
 test('close a connection before to call `createChannel`',
 function(assert) {
   client = amqpjs();
+  client.on('error', function(err) {
+    assert.equal(err.message, 'Connection closing');
+  });
   client.on('close', assert.end);
   client.close();
   client.createChannel(function(err) {
